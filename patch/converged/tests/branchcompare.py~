@@ -1,0 +1,41 @@
+import glob
+
+juhan = glob.glob('*f90')
+gareth = glob.glob('../../gareth_patch/Horizon5-master/*f90')
+
+old = []
+for j in juhan:
+    segs = j.split('.')
+    if(len(segs)==3 and not 'light_cone' in j):
+        comb = segs[0]+'.'+segs[2]
+        old.append('../'+comb)
+    else:
+        old.append('')
+
+gstring=''
+for g in gareth:
+    gstring+= g + ' , '
+
+gar = []
+nj = len(juhan)
+
+for j in range(nj):
+    if(len(old[j])>0):
+        active = old[j].split('/')[-1]
+        if(active in gstring):
+            gar.append('../../gareth_patch/Horizon5-master/'+active)
+        else:
+            gar.append('')
+    else:
+        active = juhan[j].split('.')[0]+'.'+juhan[j].split('.')[-1]
+        if(active in gstring):
+            gar.append('../../gareth_patch/Horizon5-master/'+active)
+        else:
+            gar.append('')
+
+lookup = np.array([juhan,old,gar])
+
+
+# New files
+ind=(lookup[2]=='')
+print(lookup[0,ind])

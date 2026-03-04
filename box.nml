@@ -1,0 +1,122 @@
+&RUN_PARAMS
+cosmo=.true.
+pic=.true.
+poisson=.true.
+hydro=.true.
+nrestart=63
+nremap=100
+nsubcycle=1,1,1,1,2
+ncontrol=1
+verbose=.true.
+sink=.true.             ! Activate sink (BH) particles
+sinkprops=.false.       ! Dump BH properties at every coarse time step of the simulation
+lightcone=.true.
+/
+
+&INIT_PARAMS
+filetype='grafic'
+initfile(1)='/scratch/g116a02/1_now/1_ic/output/level_008'
+initfile(2)='/scratch/g116a02/1_now/1_ic/output/level_009'
+initfile(3)='/scratch/g116a02/1_now/1_ic/output/level_010'
+initfile(4)='/scratch/g116a02/1_now/1_ic/output/level_011'
+initfile(5)='/scratch/g116a02/1_now/1_ic/output/level_012'
+initfile(6)='/scratch/g116a02/1_now/1_ic/output/level_013'
+/
+
+&OUTPUT_PARAMS
+walltime_hrs=60.
+minutes_dump=30.
+noutput=171
+aout=0.00497513,0.00575300,0.00665249,0.00769262,0.00889538,0.01028620,0.01189447,0.01375419,0.01590469,0.01839143,0.02126697,0.02459211,0.02843715,0.03288335,0.03802475,0.04397001,0.05084481,0.05879452,0.06798718,0.07861712,0.09090909,0.09238396,0.09388275,0.09540583,0.09695365,0.09852657,0.10012501,0.10174939,0.10340011,0.10507762,0.10678234,0.10851473,0.11027520,0.11206425,0.11388231,0.11572988,0.11760741,0.11951542,0.12145438,0.12342478,0.12542716,0.12746201,0.12952989,0.13163131,0.13376682,0.13593698,0.13814236,0.14038351,0.14266101,0.14497545,0.14732745,0.14971761,0.15214655,0.15461488,0.15712328,0.15967238,0.16226280,0.16489525,0.16757043,0.17028901,0.17305170,0.17585918,0.17871222,0.18161155,0.18455793,0.18755208,0.19059481,0.19368693,0.19682918,0.20002244,0.20326748,0.20656520,0.20991641,0.21332197,0.21678279,0.22029975,0.22387378,0.22750577, 0.23119672,0.23494750,0.23875919,0.24263266,0.24656899,0.25056922,0.25463432,0.25876534,0.2598,0.26296341,0.26722959,0.27156499,0.27597073,0.28044793,0.28499770,0.28962138,0.29432005,0.29909492,0.30394730,0.30887833,0.31388938,0.31898180,0.32415679,0.32941574,0.33475998,0.34019098,0.34571001,0.35131860,0.35701823,0.36281025,0.36869633,0.37467787,0.38075647,0.38693362,0.39321101,0.39959025,0.40607297,0.41266090,0.41935566,0.42615902,0.43307281,0.44009876,0.44723871,0.45449445,0.46186793,0.46936101,0.47697562,0.48471385,0.49257755,0.50056887,0.50868988,0.51694262,0.52532917,0.53385174,0.54251271,0.55131412,0.56025839,0.56934762,0.57858449,0.58797115,0.59751004,0.60720372,0.61705464,0.62706542,0.63723856,0.64757669,0.65808260,0.66875899,0.67960870,0.69063437,0.70183867,0.71322495,0.72479600,0.73655450,0.74850404,0.76064742,0.77298778,0.78552824,0.79827225,0.81122309,0.82438374,0.83775812,0.85134953,0.86516142,0.87919712,0.89346081,0.90795588,0.92268598,0.93765515,0.95286727,0.96832609,0.98403549,1.00000000
+/
+
+&AMR_PARAMS
+levelmin= 8
+levelmax= 20
+ngridtot= 15000000000    ! 1ngridtot = ~2400 Byte  (Suggested ngrid/npat = 1/5)
+nparttot= 40000000000    ! 1nparttot = ~120 Byte
+nexpand = 7,7,7,7,1,1
+/
+
+&REFINE_PARAMS
+m_refine=11*8.,
+ivar_refine=11               ! Last variable (ic_pvar_00006 for eache level contains zoom geometry information.)
+var_cut_refine=0.01
+mass_cut_refine=3.63798e-12  ! 3.63798e-12 for lmin13, 2.91037598e-11 for lmin12, 2.32831e-10 for lmin11, 1.86265e-09 for lmin10, 1.49012e-08 for lmin9, 1.19209e-07 for lmin8
+interpol_var=1
+interpol_type=0
+sink_refine=.true.
+/
+
+&HYDRO_PARAMS
+gamma=1.6666667
+courant_factor=0.8
+slope_type=1
+scheme='muscl'
+riemann='hllc'
+pressure_fix=.true.
+!beta_fix=0.5
+/
+
+&PHYSICS_PARAMS
+cooling=.true.
+haardt_madau=.true.
+metal=.true.
+z_ave=1.0e-3
+eps_star=0.02     ! Value changed from the 0.02 default
+del_star=55.
+n_star=0.1d0
+m_star=0.2
+T2_star=750       ! Value changed from 1e4 value.
+g_star=1.66667    ! Value changed from 1.66667
+f_w=3.            ! Without kintetic
+f_ek=0.3           ! Without kinetic
+eps_sn2=2.
+eps_sn1=2.
+tol=1.d-3
+yieldtablefilename='/scratch/g116a02/1_now/0_code/yield_table.asc'
+z_reion=10.
+omega_b=0.04
+delayed_cooling=.false.
+Mseed=1d4         ! Initial seed BH mass in Msun
+sink_AGN=.true.   ! Activate AGN feedback
+bondi=.true.      ! Activate Bondi accretion rate
+drag=.true.       ! Activate gas drag force onto BHs
+rAGN=4.d0         ! the size of the AGN bubble/jet
+X_floor=1d-2      ! Eddington ratio threshold between radio and quasar mode
+eAGN_K=1d0        ! Efficiency of the radio mode - jet
+eAGN_T=1.5d-1     ! Efficiency of the quasar mode - heating
+TAGN=0.0          ! Temperature increase before energy release in K
+r_gal=50d0        ! Exclusion radius for the formation of new BHs in kpc
+T2maxAGN=1d8      ! Maximum temperature increase due to AGN feedback
+boost_acc=2d0     ! Power of the density scaling in the boost factor for gas accretion (Booth & Schaye 2009)
+boost_drag=2d0    ! Power of the density scaling in the boost factor for gas drag force
+vrel_merge=.true. ! Activate relative velocity criterion to merge BHs together
+rmerge=4d0        ! Distance in dx_min units below which BHs are allowed to merge
+spin_bh=.true.    ! Activate the BH spin evolution (Dubois et al, 2014). Impact the accretion and feedback in different ways.
+mad_jet=.true.    ! Activate the MAD jet model (McKinney et al, 2012). Only works with spin_bh=.true.
+/
+
+&POISSON_PARAMS
+epsilon=1.d-5
+cg_levelmin=14
+/
+
+&LIGHTCONE_PARAMS
+zmax_cone = 200.0
+levelmin_cone=13
+elongated_axis_cone1=1   !1:x 2:y 3:z
+observer_cone1=0.0,0.5,0.5 ! (0-1)
+minboxr_cone1=0.,0.4,0.4
+maxboxr_cone1=1.,0.6,0.6
+elongated_axis_cone2=-1   !1:x 2:y 3:z
+observer_cone2=1.0,0.5,0.5 ! (0-1)
+minboxr_cone2=0.,0.4,0.4
+maxboxr_cone2=1.,0.6,0.6
+/
+
+&SPHERICAL_REGION_PARAMS
+spherical_region=.true.
+scenter=0.5,0.5,0.5   ! Code unit (0-1)
+sradius=0.02          ! Code unit (0-1)
+/
